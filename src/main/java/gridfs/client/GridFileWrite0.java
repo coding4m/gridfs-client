@@ -24,11 +24,13 @@ final class GridFileWrite0 {
 
 
     void exec(ObjectId id, String name, String md5, long size, Document metadata, InputStream data) {
-        writeChunks(id, data);
-        writeFile(id, name, md5,size, metadata);
+        writeChunks(id, size, data);
+        writeFile(id, name, md5, size, metadata);
     }
 
-    private void writeChunks(ObjectId id, InputStream data) {
+    private void writeChunks(ObjectId id, long size, InputStream data) {
+        long writeBytes = 0;
+
         int chunkNr = 0;
         int readBytes;
         byte[] buf = new byte[chunkSize];
@@ -37,6 +39,11 @@ final class GridFileWrite0 {
                 readBytes = data.read(buf);
                 if (readBytes == -1) {
                     break;
+                }
+
+                writeBytes = writeBytes + readBytes;
+                if (writeBytes > size) {
+                    throw new GridFsException(String.format("file overflow[size=%s, data=%s].", size, writeBytes));
                 }
 
                 byte[] chunk = buf;
@@ -60,7 +67,7 @@ final class GridFileWrite0 {
                 .append("uploadDate", new BsonDateTime(System.currentTimeMillis()))
                 .append("md5", md5)
                 .append("filename", name);
-        if (metadata != null && !metadata.isEmpty()) {
+        if (null != metadata && !metadata.isEmpty()) {
             fileDocument.append("metadata", metadata);
         }
         filesCollection.insertOne(fileDocument);

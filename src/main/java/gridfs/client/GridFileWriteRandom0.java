@@ -58,7 +58,7 @@ final class GridFileWriteRandom0 {
             int readSize = write.readSize;
 
             writeBytes = writeBytes + readSize;
-            if (writeBytes > fileSize) {
+            if (writeBytes + offset > fileSize) {
                 throw new GridFsException(String.format("file[id=%s] offset out of range, size=%s", id, fileSize));
             }
 
