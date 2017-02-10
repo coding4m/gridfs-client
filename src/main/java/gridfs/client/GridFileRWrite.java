@@ -10,12 +10,12 @@ import org.bson.types.ObjectId;
 /**
  * @author siuming
  */
-final class GridFileWriteRandom {
+final class GridFileRWrite {
 
     private final MongoCollection<Document> filesCollection;
     private final MongoCollection<Document> chunkCollection;
 
-    GridFileWriteRandom(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
+    GridFileRWrite(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
         this.filesCollection = filesCollection;
         this.chunkCollection = chunkCollection;
     }

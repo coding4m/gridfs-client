@@ -79,8 +79,8 @@ final class GridFileBucket {
         action.exec(id, out);
     }
 
-    byte[] readRandom(ObjectId id, long offset, long size) {
-        GridFileReadRandom action = new GridFileReadRandom(
+    byte[] readR(ObjectId id, long offset, long size) {
+        GridFileRRead action = new GridFileRRead(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern)
         );
@@ -88,8 +88,8 @@ final class GridFileBucket {
         return action.exec(id, offset, size);
     }
 
-    void readRandom0(ObjectId id, long offset, long size, OutputStream out) {
-        GridFileReadRandom0 action = new GridFileReadRandom0(
+    void readR0(ObjectId id, long offset, long size, OutputStream out) {
+        GridFileRRead0 action = new GridFileRRead0(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern)
         );
@@ -119,16 +119,16 @@ final class GridFileBucket {
         return id;
     }
 
-    void writeRandom(ObjectId id, long offset, byte[] data) {
-        GridFileWriteRandom action = new GridFileWriteRandom(
+    void writeR(ObjectId id, long offset, byte[] data) {
+        GridFileRWrite action = new GridFileRWrite(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern)
         );
         action.exec(id, offset, data);
     }
 
-    void writeRandom0(ObjectId id, long offset, InputStream data) {
-        GridFileWriteRandom0 action = new GridFileWriteRandom0(
+    void writeR0(ObjectId id, long offset, InputStream data) {
+        GridFileRWrite0 action = new GridFileRWrite0(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern)
         );

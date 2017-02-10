@@ -77,7 +77,7 @@ public class GridFsClient implements Closeable {
     public CompletableFuture<byte[]> download(ObjectId id, long offset, long size) {
         return CompletableFuture
                 .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
-                .thenApplyAsync(bucket -> bucket.readRandom(id, offset, size), executorService);
+                .thenApplyAsync(bucket -> bucket.readR(id, offset, size), executorService);
     }
 
     public CompletableFuture<Void> download(ObjectId id, OutputStream out) {
@@ -93,7 +93,7 @@ public class GridFsClient implements Closeable {
         return CompletableFuture
                 .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> {
-                    bucket.readRandom0(id, offset, size, out);
+                    bucket.readR0(id, offset, size, out);
                     return null;
                 }, executorService);
     }
@@ -114,7 +114,7 @@ public class GridFsClient implements Closeable {
         return CompletableFuture
                 .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> {
-                    bucket.writeRandom(id, offset, content);
+                    bucket.writeR(id, offset, content);
                     return null;
                 }, executorService);
     }
@@ -123,7 +123,7 @@ public class GridFsClient implements Closeable {
         return CompletableFuture
                 .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> {
-                    bucket.writeRandom0(id, offset, content);
+                    bucket.writeR0(id, offset, content);
                     return null;
                 }, executorService);
     }

@@ -8,11 +8,11 @@ import org.bson.types.ObjectId;
 /**
  * @author siuming
  */
-final class GridFileReadRandom {
+final class GridFileRRead {
     private final MongoCollection<Document> filesCollection;
     private final MongoCollection<Document> chunkCollection;
 
-    GridFileReadRandom(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
+    GridFileRRead(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
         this.filesCollection = filesCollection;
         this.chunkCollection = chunkCollection;
     }
