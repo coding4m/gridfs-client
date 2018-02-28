@@ -40,19 +40,19 @@ public class GridFsClient implements Closeable {
 
     public CompletableFuture<GridFile> get(ObjectId id) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> bucket.get(id), executorService);
     }
 
     public CompletableFuture<GridFile> get(String md5) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> bucket.get0(md5), executorService);
     }
 
     public CompletableFuture<Void> delete(ObjectId id) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> {
                     bucket.delete(id);
                     return null;
@@ -61,7 +61,7 @@ public class GridFsClient implements Closeable {
 
     public CompletableFuture<Void> delete(String md5) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> {
                     bucket.delete0(md5);
                     return null;
@@ -70,19 +70,19 @@ public class GridFsClient implements Closeable {
 
     public CompletableFuture<byte[]> download(ObjectId id) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> bucket.read(id), executorService);
     }
 
     public CompletableFuture<byte[]> download(ObjectId id, long offset, long size) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> bucket.readR(id, offset, size), executorService);
     }
 
     public CompletableFuture<Void> download(ObjectId id, OutputStream out) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> {
                     bucket.read0(id, out);
                     return null;
@@ -91,7 +91,7 @@ public class GridFsClient implements Closeable {
 
     public CompletableFuture<Void> download(ObjectId id, long offset, long size, OutputStream out) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> {
                     bucket.readR0(id, offset, size, out);
                     return null;
@@ -100,19 +100,19 @@ public class GridFsClient implements Closeable {
 
     public CompletableFuture<ObjectId> upload(String filename, String md5, long size, Map<String, Object> metadata, byte[] content) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> bucket.write(filename, md5, size, new Document(metadata), content), executorService);
     }
 
     public CompletableFuture<ObjectId> upload(String filename, String md5, long size, Map<String, Object> metadata, InputStream content) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> bucket.write0(filename, md5, size, new Document(metadata), content), executorService);
     }
 
     public CompletableFuture<Void> modify(ObjectId id, long offset, byte[] content) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> {
                     bucket.writeR(id, offset, content);
                     return null;
@@ -121,7 +121,7 @@ public class GridFsClient implements Closeable {
 
     public CompletableFuture<Void> modify(ObjectId id, long offset, InputStream content) {
         return CompletableFuture
-                .supplyAsync(() -> new GridFileBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
+                .supplyAsync(() -> new GridBucket(database, readConcern, writeConcern, bucketName, chunkSize), executorService)
                 .thenApplyAsync(bucket -> {
                     bucket.writeR0(id, offset, content);
                     return null;

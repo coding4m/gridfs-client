@@ -8,11 +8,11 @@ import org.bson.types.ObjectId;
 /**
  * @author siuming
  */
-final class GridFileRead {
+final class GridRead {
     private final MongoCollection<Document> filesCollection;
     private final MongoCollection<Document> chunkCollection;
 
-    GridFileRead(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
+    GridRead(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
         this.filesCollection = filesCollection;
         this.chunkCollection = chunkCollection;
     }

@@ -11,12 +11,12 @@ import java.io.InputStream;
 /**
  * @author siuming
  */
-final class GridFileWrite0 {
+final class GridWrite0 {
     private final MongoCollection<Document> filesCollection;
     private final MongoCollection<Document> chunkCollection;
     private final int chunkSize;
 
-    GridFileWrite0(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection, int chunkSize) {
+    GridWrite0(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection, int chunkSize) {
         this.filesCollection = filesCollection;
         this.chunkCollection = chunkCollection;
         this.chunkSize = chunkSize;

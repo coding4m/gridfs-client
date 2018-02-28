@@ -9,13 +9,13 @@ import org.bson.types.ObjectId;
 /**
  * @author siuming
  */
-final class GridFileWrite {
+final class GridWrite {
 
     private final MongoCollection<Document> filesCollection;
     private final MongoCollection<Document> chunkCollection;
     private final int chunkSize;
 
-    GridFileWrite(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection, int chunkSize) {
+    GridWrite(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection, int chunkSize) {
         this.filesCollection = filesCollection;
         this.chunkCollection = chunkCollection;
         this.chunkSize = chunkSize;

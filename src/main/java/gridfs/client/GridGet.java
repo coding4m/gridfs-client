@@ -2,6 +2,7 @@ package gridfs.client;
 
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.Collections;
 import java.util.Date;
@@ -9,15 +10,15 @@ import java.util.Date;
 /**
  * @author siuming
  */
-final class GridFileGet0 {
+final class GridGet {
     private final MongoCollection<Document> filesCollection;
 
-    GridFileGet0(MongoCollection<Document> filesCollection) {
+    GridGet(MongoCollection<Document> filesCollection) {
         this.filesCollection = filesCollection;
     }
 
-    GridFile exec(String md5) {
-        Document gridFile = filesCollection.find(new Document("md5", md5)).first();
+    GridFile exec(ObjectId id) {
+        Document gridFile = filesCollection.find(new Document("_id", id)).first();
         if (null == gridFile) {
             return null;
         }

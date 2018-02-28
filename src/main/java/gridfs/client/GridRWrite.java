@@ -10,12 +10,12 @@ import org.bson.types.ObjectId;
 /**
  * @author siuming
  */
-final class GridFileRWrite {
+final class GridRWrite {
 
     private final MongoCollection<Document> filesCollection;
     private final MongoCollection<Document> chunkCollection;
 
-    GridFileRWrite(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
+    GridRWrite(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
         this.filesCollection = filesCollection;
         this.chunkCollection = chunkCollection;
     }

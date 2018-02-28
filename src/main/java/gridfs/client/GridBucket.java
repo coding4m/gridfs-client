@@ -16,14 +16,14 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 /**
  * @author siuming
  */
-final class GridFileBucket {
+final class GridBucket {
     private MongoDatabase database;
     private ReadConcern readConcern;
     private WriteConcern writeConcern;
     private String bucketName;
     private int chunkSize;
 
-    GridFileBucket(MongoDatabase database, ReadConcern readConcern, WriteConcern writeConcern, String bucketName, int chunkSize) {
+    GridBucket(MongoDatabase database, ReadConcern readConcern, WriteConcern writeConcern, String bucketName, int chunkSize) {
         this.database = database;
         this.readConcern = readConcern;
         this.writeConcern = writeConcern;
@@ -32,21 +32,21 @@ final class GridFileBucket {
     }
 
     GridFile get(ObjectId id) {
-        GridFileGet action = new GridFileGet(
+        GridGet action = new GridGet(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern)
         );
         return action.exec(id);
     }
 
     GridFile get0(String md5) {
-        GridFileGet0 action = new GridFileGet0(
+        GridGet0 action = new GridGet0(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern)
         );
         return action.exec(md5);
     }
 
     void delete(ObjectId id) {
-        GridFileDelete action = new GridFileDelete(
+        GridDelete action = new GridDelete(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern)
         );
@@ -54,7 +54,7 @@ final class GridFileBucket {
     }
 
     void delete0(String md5) {
-        GridFileDelete0 action = new GridFileDelete0(
+        GridDelete0 action = new GridDelete0(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern)
         );
@@ -62,7 +62,7 @@ final class GridFileBucket {
     }
 
     byte[] read(ObjectId id) {
-        GridFileRead action = new GridFileRead(
+        GridRead action = new GridRead(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern)
         );
@@ -71,7 +71,7 @@ final class GridFileBucket {
     }
 
     void read0(ObjectId id, OutputStream out) {
-        GridFileRead0 action = new GridFileRead0(
+        GridRead0 action = new GridRead0(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern)
         );
@@ -80,7 +80,7 @@ final class GridFileBucket {
     }
 
     byte[] readR(ObjectId id, long offset, long size) {
-        GridFileRRead action = new GridFileRRead(
+        GridRRead action = new GridRRead(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern)
         );
@@ -89,7 +89,7 @@ final class GridFileBucket {
     }
 
     void readR0(ObjectId id, long offset, long size, OutputStream out) {
-        GridFileRRead0 action = new GridFileRRead0(
+        GridRRead0 action = new GridRRead0(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern)
         );
@@ -99,7 +99,7 @@ final class GridFileBucket {
 
     ObjectId write(String name, String md5, long size, Document metadata, byte[] data) {
         ObjectId id = new ObjectId();
-        GridFileWrite action = new GridFileWrite(
+        GridWrite action = new GridWrite(
                 getFilesCollection(database, bucketName).withWriteConcern(writeConcern),
                 getChunkCollection(database, bucketName).withWriteConcern(writeConcern),
                 chunkSize
@@ -110,7 +110,7 @@ final class GridFileBucket {
 
     ObjectId write0(String name, String md5, long size, Document metadata, InputStream data) {
         ObjectId id = new ObjectId();
-        GridFileWrite0 action = new GridFileWrite0(
+        GridWrite0 action = new GridWrite0(
                 getFilesCollection(database, bucketName).withWriteConcern(writeConcern),
                 getChunkCollection(database, bucketName).withWriteConcern(writeConcern),
                 chunkSize
@@ -120,7 +120,7 @@ final class GridFileBucket {
     }
 
     void writeR(ObjectId id, long offset, byte[] data) {
-        GridFileRWrite action = new GridFileRWrite(
+        GridRWrite action = new GridRWrite(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern)
         );
@@ -128,7 +128,7 @@ final class GridFileBucket {
     }
 
     void writeR0(ObjectId id, long offset, InputStream data) {
-        GridFileRWrite0 action = new GridFileRWrite0(
+        GridRWrite0 action = new GridRWrite0(
                 getFilesCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern),
                 getChunkCollection(database, bucketName).withReadConcern(readConcern).withWriteConcern(writeConcern)
         );

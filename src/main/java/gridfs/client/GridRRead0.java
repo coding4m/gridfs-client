@@ -10,11 +10,11 @@ import java.io.OutputStream;
 /**
  * @author siuming
  */
-final class GridFileRRead0 {
+final class GridRRead0 {
     private final MongoCollection<Document> filesCollection;
     private final MongoCollection<Document> chunkCollection;
 
-    GridFileRRead0(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
+    GridRRead0(MongoCollection<Document> filesCollection, MongoCollection<Document> chunkCollection) {
         this.filesCollection = filesCollection;
         this.chunkCollection = chunkCollection;
     }

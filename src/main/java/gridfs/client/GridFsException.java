@@ -3,7 +3,7 @@ package gridfs.client;
 /**
  * @author siuming
  */
-public class GridFsException extends RuntimeException{
+public class GridFsException extends RuntimeException {
     public GridFsException() {
     }
 
